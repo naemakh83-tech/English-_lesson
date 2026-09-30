@@ -1,0 +1,1123 @@
+// ```html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Joe's Holiday Album - اللعبة التعليمية التفاعلية</title>
+    <style>
+        /* Ultra-fast lightweight CSS with vibrant kid-friendly theme */
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --bg-start: #e0f2fe;
+            --bg-end: #fce7f3;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            min-height: 100vh;
+            padding: 12px;
+            color: var(--text-main);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        /* Header Banner Styling */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            border: 3px solid #fcd34d;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .camera-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #f59e0b, #ec4899);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            font-size: 24px;
+        }
+
+        .header-text h1 {
+            font-size: 1.35rem;
+            color: #312e81;
+            font-weight: 800;
+        }
+
+        .header-text p {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+
+        .badge-unit {
+            background-color: #fef3c7;
+            color: #92400e;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        /* Score Box */
+        .score-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #e0e7ff;
+            padding: 8px 16px;
+            border-radius: 14px;
+            border: 2px solid #c7d2fe;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            color: #4338ca;
+            font-weight: 700;
+        }
+
+        .score-val {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #d97706;
+        }
+
+        .audio-btn {
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: #6366f1;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: transform 0.1s;
+        }
+
+        .audio-btn:active {
+            transform: scale(0.92);
+        }
+
+        /* Navigation Buttons */
+        nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .nav-btn {
+            flex: 1;
+            min-width: 130px;
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            padding: 10px 12px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Container Card */
+        .card-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            border: 3px solid #e0e7ff;
+        }
+
+        /* Progress Bar */
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #475569;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #34d399, #6366f1);
+            width: 12.5%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        /* Question Box */
+        .question-card {
+            background: linear-gradient(135deg, #f0fdf4, #e0e7ff);
+            border: 2px solid #a5b4fc;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .question-badge {
+            background: #4f46e5;
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 6px;
+            direction: ltr;
+        }
+
+        .question-title {
+            font-size: 1.15rem;
+            color: #1e1b4b;
+            font-weight: 800;
+            margin-bottom: 6px;
+            direction: ltr;
+            text-align: right;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            color: #0f172a;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        /* Interactive Choices */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #cbd5e1;
+            padding: 14px 16px;
+            border-radius: 14px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: #1e293b;
+            cursor: pointer;
+            text-align: right;
+            transition: all 0.15s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            direction: ltr;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+        }
+
+        .option-btn:hover {
+            border-color: #818cf8;
+            background: #f8fafc;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #14532d !important;
+        }
+
+        .option-btn.wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #7f1d1d !important;
+        }
+
+        /* Show / Hide Answer Container */
+        .answer-toggle-container {
+            border-top: 2px dashed #cbd5e1;
+            padding-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .toggle-ans-btn {
+            background: #f59e0b;
+            color: #78350f;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 3px 6px rgba(245, 158, 11, 0.2);
+        }
+
+        .toggle-ans-btn:hover {
+            background: #d97706;
+            color: white;
+        }
+
+        .toggle-ans-btn:active {
+            transform: scale(0.96);
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .ctrl-btn {
+            padding: 9px 16px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .ctrl-prev {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .ctrl-next {
+            background: var(--primary);
+            color: white;
+        }
+
+        .ctrl-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Show/Hide Expandable Box */
+        .expandable-answer {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0, 1, 0, 1);
+            background: #ecfdf5;
+            border: 2px solid #6ee7b7;
+            border-radius: 14px;
+            padding: 0 16px;
+        }
+
+        .expandable-answer.open {
+            max-height: 200px;
+            opacity: 1;
+            padding: 14px 16px;
+            margin-top: 8px;
+        }
+
+        .ans-text {
+            font-weight: 800;
+            color: #065f46;
+            font-size: 1rem;
+            direction: ltr;
+            text-align: right;
+        }
+
+        /* Flashcards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .fc-card {
+            background: white;
+            border-radius: 18px;
+            padding: 16px;
+            border: 3px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .fc-icon {
+            height: 80px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            margin-bottom: 12px;
+        }
+
+        .fc-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 4px;
+            direction: ltr;
+            text-align: right;
+        }
+
+        .fc-sub {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .fc-adj {
+            background: #fef3c7;
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #fde68a;
+        }
+
+        .fc-adj span {
+            font-weight: 900;
+            color: #b45309;
+            font-size: 1.05rem;
+            direction: ltr;
+            display: inline-block;
+        }
+
+        /* Confetti Overlay */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Confetti Canvas for Victory Animation -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <div class="container">
+        <!-- Header Banner -->
+        <header>
+            <div class="header-title">
+                <div class="camera-icon">📸</div>
+                <div class="header-text">
+                    <span class="badge-unit">Unit 1 - Lesson 2</span>
+                    <h1>Joe's Holiday Album 🌍</h1>
+                    <p>لعبة ذكية تفاعلية سريعة الفتح والتحميل</p>
+                </div>
+            </div>
+
+            <!-- Score Display & Sound Control -->
+            <div class="score-box">
+                <div class="score-item">
+                    <div class="score-label">النقاط ⭐</div>
+                    <div id="scoreDisplay" class="score-val">0</div>
+                </div>
+                <div style="width: 2px; height: 28px; background: #c7d2fe;"></div>
+                <button class="audio-btn" id="audioBtn" onclick="toggleAudio()" title="تشغيل/إيقاف الصوت">🔊</button>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav>
+            <button class="nav-btn active" id="btn-quiz" onclick="switchTab('quiz')">
+                <span>🎮</span> أسئلة اللعبة
+            </button>
+            <button class="nav-btn" id="btn-cards" onclick="switchTab('cards')">
+                <span>🏛️</span> بطاقات الأماكن
+            </button>
+            <button class="nav-btn" id="btn-vocab" onclick="switchTab('vocab')">
+                <span>📖</span> قاموس الكلمات
+            </button>
+            <button class="nav-btn" id="btn-answers" onclick="switchTab('answers')">
+                <span>🔑</span> دليل الإجابات
+            </button>
+        </nav>
+
+        <!-- SECTION 1: INTERACTIVE QUIZ GAME -->
+        <section id="sec-quiz" class="card-container">
+            <!-- Progress Indicator -->
+            <div class="progress-header">
+                <span id="quizProgText">السؤال 1 من 8</span>
+                <span id="quizStreakText" style="color: #d97706;">سلسلة الإجابات: 0 🔥</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="quizProgFill"></div>
+            </div>
+
+            <!-- Question Display -->
+            <div class="question-card">
+                <span class="question-badge" id="qBadge">WB Section A #1</span>
+                <div class="question-title" id="qTitle">Park Güell (Barcelona)</div>
+                <div class="question-text" id="qText">ما هي الصفة الصحيحة التي استخدمها جو لوصف هذا المكان؟</div>
+            </div>
+
+            <!-- Options Grid -->
+            <div class="options-grid" id="optionsContainer">
+                <!-- Dynamically generated choice buttons -->
+            </div>
+
+            <!-- Show/Hide Answer Toggle Section -->
+            <div class="answer-toggle-container">
+                <div class="action-row">
+                    <!-- Dynamic Show/Hide Button -->
+                    <button class="toggle-ans-btn" onclick="toggleQuizAnswer()">
+                        <span>💡</span>
+                        <span id="toggleBtnLabel">إظهار الإجابة النموذجية</span>
+                    </button>
+
+                    <div class="nav-controls">
+                        <button class="ctrl-btn ctrl-prev" id="prevBtn" onclick="prevQuestion()" disabled>السابق</button>
+                        <button class="ctrl-btn ctrl-next" id="nextBtn" onclick="nextQuestion()">التالي</button>
+                    </div>
+                </div>
+
+                <!-- Expandable Answer Box -->
+                <div class="expandable-answer" id="quizAnswerBox">
+                    <div style="font-size: 0.8rem; font-weight: 700; color: #047857; margin-bottom: 4px;">الإجابة المعتمدة من كتاب المعلم (Teacher's Book):</div>
+                    <div class="ans-text" id="quizAnswerVal">amazing</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: FLASHCARDS FOR LANDMARKS & ADJECTIVES -->
+        <section id="sec-cards" class="card-container hidden">
+            <h2 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; color: #312e81;">بطاقات الأماكن والصفات 🗺️</h2>
+            <div class="cards-grid">
+
+                <!-- Card 1 -->
+                <div class="fc-card">
+                    <div>
+                        <div class="fc-icon" style="background: #e0e7ff;">🎨</div>
+                        <div class="fc-title">1. Park Güell</div>
+                        <div class="fc-sub">حديقة بارك غويل - برشلونة</div>
+                        <div class="fc-adj">
+                            <div style="font-size: 0.75rem; color: #78350f; font-weight: 700;">الصفة (Adjective):</div>
+                            <span>amazing ✨</span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: #475569;"><strong>حقيقة:</strong> بها منحوتات وتماثيل ومبانٍ ملونة.</div>
+                    </div>
+                    <button class="toggle-ans-btn" style="width: 100%; margin-top: 12px; justify-content: center;" onclick="toggleCardAns('fc-ans-1', this)">
+                        <span>إظهار تفاصيل الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="fc-ans-1">
+                        <div class="ans-text" style="font-size: 0.85rem;">Park Güell - amazing (in Barcelona, sculptures, statues, buildings)</div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="fc-card">
+                    <div>
+                        <div class="fc-icon" style="background: #fef3c7;">🏛️</div>
+                        <div class="fc-title">2. Leaning Tower of Pisa</div>
+                        <div class="fc-sub">برج بيزا المائل - إيطاليا</div>
+                        <div class="fc-adj">
+                            <div style="font-size: 0.75rem; color: #78350f; font-weight: 700;">الصفة (Adjective):</div>
+                            <span>great 🏛️</span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: #475569;"><strong>حقيقة:</strong> بُني في القرن 12 والأرض كانت رخوة جداً.</div>
+                    </div>
+                    <button class="toggle-ans-btn" style="width: 100%; margin-top: 12px; justify-content: center;" onclick="toggleCardAns('fc-ans-2', this)">
+                        <span>إظهار تفاصيل الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="fc-ans-2">
+                        <div class="ans-text" style="font-size: 0.85rem;">Leaning Tower of Pisa - great (built in 12th century, ground too soft)</div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="fc-card">
+                    <div>
+                        <div class="fc-icon" style="background: #e0f2fe;">🌅</div>
+                        <div class="fc-title">3. Leptis Magna</div>
+                        <div class="fc-sub">لبدة الكبرى - ليبيا 🇱🇾</div>
+                        <div class="fc-adj">
+                            <div style="font-size: 0.75rem; color: #78350f; font-weight: 700;">الصفة (Adjective):</div>
+                            <span>beautiful 🌊</span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: #475569;"><strong>حقيقة:</strong> مدينة تاريخية رومانية بها ساحة عامة وسوق ومسرح.</div>
+                    </div>
+                    <button class="toggle-ans-btn" style="width: 100%; margin-top: 12px; justify-content: center;" onclick="toggleCardAns('fc-ans-3', this)">
+                        <span>إظهار تفاصيل الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="fc-ans-3">
+                        <div class="ans-text" style="font-size: 0.85rem;">Leptis Magna - beautiful (city in Roman Empire, birthplace of Emperor)</div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="fc-card">
+                    <div>
+                        <div class="fc-icon" style="background: #f3e8ff;">🔔</div>
+                        <div class="fc-title">4. Big Ben</div>
+                        <div class="fc-sub">ساعة بيغ بن - لندن</div>
+                        <div class="fc-adj">
+                            <div style="font-size: 0.75rem; color: #78350f; font-weight: 700;">الصفة (Adjective):</div>
+                            <span>interesting ⏱️</span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: #475569;"><strong>حقيقة:</strong> وزن الجرس 13 طناً وكان الأكبر في بريطانيا.</div>
+                    </div>
+                    <button class="toggle-ans-btn" style="width: 100%; margin-top: 12px; justify-content: center;" onclick="toggleCardAns('fc-ans-4', this)">
+                        <span>إظهار تفاصيل الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="fc-ans-4">
+                        <div class="ans-text" style="font-size: 0.85rem;">Big Ben - interesting (bell weighs 13 tons, biggest bell in UK)</div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="fc-card">
+                    <div>
+                        <div class="fc-icon" style="background: #fef08a;">🔺</div>
+                        <div class="fc-title">5. The Pyramids</div>
+                        <div class="fc-sub">الأهرامات - مصر 🇪🇬</div>
+                        <div class="fc-adj">
+                            <div style="font-size: 0.75rem; color: #78350f; font-weight: 700;">الصفة (Adjective):</div>
+                            <span>fantastic ✨</span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: #475569;"><strong>حقيقة:</strong> بُنيت منذ أكثر من 3000 سنة ويوجد أكثر من 100 هرم.</div>
+                    </div>
+                    <button class="toggle-ans-btn" style="width: 100%; margin-top: 12px; justify-content: center;" onclick="toggleCardAns('fc-ans-5', this)">
+                        <span>إظهار تفاصيل الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="fc-ans-5">
+                        <div class="ans-text" style="font-size: 0.85rem;">The pyramids - fantastic (built over 3,000 years ago, 100+ pyramids)</div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="fc-card">
+                    <div>
+                        <div class="fc-icon" style="background: #dbeafe;">💦</div>
+                        <div class="fc-title">6. Victoria Falls</div>
+                        <div class="fc-sub">شلالات فيكتوريا - زيمبابوي</div>
+                        <div class="fc-adj">
+                            <div style="font-size: 0.75rem; color: #78350f; font-weight: 700;">الصفة (Adjective):</div>
+                            <span>exciting 🌊</span>
+                        </div>
+                        <div style="font-size: 0.8rem; color: #475569;"><strong>حقيقة:</strong> ارتفاعها 100 متر والمياه تصدر صوتاً عالياً.</div>
+                    </div>
+                    <button class="toggle-ans-btn" style="width: 100%; margin-top: 12px; justify-content: center;" onclick="toggleCardAns('fc-ans-6', this)">
+                        <span>إظهار تفاصيل الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="fc-ans-6">
+                        <div class="ans-text" style="font-size: 0.85rem;">Victoria Falls - exciting (100 metres high, makes loud noise)</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: VOCABULARY MATCHING -->
+        <section id="sec-vocab" class="card-container hidden">
+            <h2 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; color: #312e81;">قاموس ومعاني الكلمات (WB Section C) 📚</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px;">
+
+                <div style="background: #fdf2f8; border: 2px solid #fbcfe8; padding: 14px; border-radius: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-weight: 900; color: #db2777; font-size: 1.1rem; direction: ltr;">1. sculptures</span>
+                        <span style="background: #f472b6; color: white; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 700;">تماثيل / منحوتات</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #475569; margin-bottom: 10px; direction: ltr;">Objects or designs made from wood, clay or metal.</p>
+                    <button class="toggle-ans-btn" style="width: 100%; justify-content: center; font-size: 0.8rem;" onclick="toggleCardAns('v-ans-1', this)">
+                        <span>إظهار المعنى من الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="v-ans-1">
+                        <div class="ans-text" style="font-size: 0.85rem;">sculptures = objects or designs made from wood, clay or metal</div>
+                    </div>
+                </div>
+
+                <div style="background: #f3e8ff; border: 2px solid #e9d5ff; padding: 14px; border-radius: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-weight: 900; color: #9333ea; font-size: 1.1rem; direction: ltr;">2. mosaics</span>
+                        <span style="background: #c084fc; color: white; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 700;">فسيفساء</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #475569; margin-bottom: 10px; direction: ltr;">Tiny pieces of glass or pottery joined together.</p>
+                    <button class="toggle-ans-btn" style="width: 100%; justify-content: center; font-size: 0.8rem;" onclick="toggleCardAns('v-ans-2', this)">
+                        <span>إظهار المعنى من الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="v-ans-2">
+                        <div class="ans-text" style="font-size: 0.85rem;">mosaics = tiny pieces of glass or pottery</div>
+                    </div>
+                </div>
+
+                <div style="background: #ecfdf5; border: 2px solid #a7f3d0; padding: 14px; border-radius: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-weight: 900; color: #059669; font-size: 1.1rem; direction: ltr;">3. ground</span>
+                        <span style="background: #34d399; color: white; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 700;">الأرض / التربة</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #475569; margin-bottom: 10px; direction: ltr;">The earth surface we walk on.</p>
+                    <button class="toggle-ans-btn" style="width: 100%; justify-content: center; font-size: 0.8rem;" onclick="toggleCardAns('v-ans-3', this)">
+                        <span>إظهار المعنى من الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="v-ans-3">
+                        <div class="ans-text" style="font-size: 0.85rem;">ground = the earth</div>
+                    </div>
+                </div>
+
+                <div style="background: #fef3c7; border: 2px solid #fde68a; padding: 14px; border-radius: 16px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-weight: 900; color: #d97706; font-size: 1.1rem; direction: ltr;">4. forum</span>
+                        <span style="background: #fbbf24; color: white; padding: 2px 8px; border-radius: 8px; font-size: 0.75rem; font-weight: 700;">الساحة العامة</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #475569; margin-bottom: 10px; direction: ltr;">Public square in an ancient city.</p>
+                    <button class="toggle-ans-btn" style="width: 100%; justify-content: center; font-size: 0.8rem;" onclick="toggleCardAns('v-ans-4', this)">
+                        <span>إظهار المعنى من الدليل</span>
+                    </button>
+                    <div class="expandable-answer" id="v-ans-4">
+                        <div class="ans-text" style="font-size: 0.85rem;">forum = public square</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 4: TEACHER's BOOK KEY -->
+        <section id="sec-answers" class="card-container hidden">
+            <h2 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; color: #312e81;">دليل الإجابات الكامل من كتاب المعلم (Workbook Page 5) 📑</h2>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+
+                <div style="background: #e0e7ff; padding: 14px; border-radius: 16px; border: 2px solid #c7d2fe;">
+                    <h3 style="font-size: 1rem; color: #3730a3; font-weight: 800; margin-bottom: 10px; direction: ltr; text-align: right;">WB A: Adjectives used by Joe</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 8px; direction: ltr;">
+                        <div style="background: white; padding: 8px 12px; border-radius: 10px;">1. Leaning Tower of Pisa: <strong>great</strong></div>
+                        <div style="background: white; padding: 8px 12px; border-radius: 10px;">2. Leptis Magna: <strong>beautiful</strong></div>
+                        <div style="background: white; padding: 8px 12px; border-radius: 10px;">3. Victoria Falls: <strong>exciting</strong></div>
+                        <div style="background: white; padding: 8px 12px; border-radius: 10px;">4. Big Ben: <strong>interesting</strong></div>
+                        <div style="background: white; padding: 8px 12px; border-radius: 10px;">5. The pyramids: <strong>fantastic</strong></div>
+                        <div style="background: white; padding: 8px 12px; border-radius: 10px;">6. Park Güell: <strong>amazing</strong></div>
+                    </div>
+                </div>
+
+                <div style="background: #dcfce7; padding: 14px; border-radius: 16px; border: 2px solid #86efac;">
+                    <h3 style="font-size: 1rem; color: #166534; font-weight: 800; margin-bottom: 10px; direction: ltr; text-align: right;">WB B: Facts heard in audio</h3>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 6px; font-size: 0.85rem; direction: ltr; text-align: right;">
+                        <li style="background: white; padding: 8px; border-radius: 8px;">• <strong>Park Güell:</strong> in Barcelona, sculptures, statues, buildings</li>
+                        <li style="background: white; padding: 8px; border-radius: 8px;">• <strong>Leaning Tower of Pisa:</strong> built in 12th century, ground too soft</li>
+                        <li style="background: white; padding: 8px; border-radius: 8px;">• <strong>Leptis Magna:</strong> Roman Empire city, birthplace of Emperor, forum</li>
+                        <li style="background: white; padding: 8px; border-radius: 8px;">• <strong>Big Ben:</strong> bell weighs 13 tons, biggest bell in UK</li>
+                        <li style="background: white; padding: 8px; border-radius: 8px;">• <strong>Pyramids:</strong> built over 3,000 years ago, more than 100 pyramids</li>
+                        <li style="background: white; padding: 8px; border-radius: 8px;">• <strong>Victoria Falls:</strong> 100 metres high, water makes loud noise</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="margin-top: 20px; text-align: center; font-size: 0.8rem; color: #64748b; font-weight: 700;">
+            English for Libya - Grade 7 - Unit 1 Lesson 2 Interactive App 🚀
+        </footer>
+    </div>
+
+    <!-- GAME ENGINE & INSTANT AUDIO SYNTHESIZER -->
+    <script>
+        // High Performance Web Audio Synthesizer (Zero network download delay)
+        let audioEnabled = true;
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Victory Audio Melody
+        function playWinSound() {
+            if (!audioEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+
+            const now = ctx.currentTime;
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+                gain.gain.setValueAtTime(0, now + idx * 0.08);
+                gain.gain.linearRampToValueAtTime(0.3, now + idx * 0.08 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now + idx * 0.08);
+                osc.stop(now + idx * 0.08 + 0.3);
+            });
+
+            triggerConfetti();
+        }
+
+        // Loss Audio Melody
+        function playLoseSound() {
+            if (!audioEnabled) return;
+            const ctx = getAudioContext();
+            if (!ctx) return;
+
+            const now = ctx.currentTime;
+            const notes = [311.13, 277.18, 246.94]; // Eb4, Db4, B3
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+
+                gain.gain.setValueAtTime(0.2, now + idx * 0.12);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.12 + 0.25);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now + idx * 0.12);
+                osc.stop(now + idx * 0.12 + 0.25);
+            });
+        }
+
+        function toggleAudio() {
+            audioEnabled = !audioEnabled;
+            document.getElementById('audioBtn').innerText = audioEnabled ? '🔊' : '🔇';
+        }
+
+        // Pure Canvas Confetti Effect
+        function triggerConfetti() {
+            const canvas = document.getElementById('confettiCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#f59e0b', '#ec4899', '#3b82f6', '#10b981', '#8b5cf6'];
+
+            for (let i = 0; i < 40; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 12,
+                    vy: (Math.random() - 0.7) * 12,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    life: 1
+                });
+            }
+
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.3; // Gravity
+                    p.life -= 0.02;
+                    if (p.life > 0) {
+                        alive = true;
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = p.life;
+                        ctx.fillRect(p.x, p.y, p.size, p.size);
+                    }
+                });
+                if (alive) {
+                    requestAnimationFrame(render);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            render();
+        }
+
+        // Quiz Questions Data based on Grade 7 Curriculum
+        const quizQuestions = [
+            {
+                badge: "WB Section A #1",
+                title: "Park Güell (Barcelona)",
+                question: "ماهي الصفة التي استخدمها جو لوصف حديقة (Park Güell)؟",
+                options: ["amazing", "boring", "small", "dark"],
+                correct: 0,
+                answerText: "amazing"
+            },
+            {
+                badge: "WB Section A #2",
+                title: "Leaning Tower of Pisa (Italy)",
+                question: "ماهي الصفة التي وصف بها جو برج بيزا (Leaning Tower of Pisa)؟",
+                options: ["great", "bad", "noisy", "young"],
+                correct: 0,
+                answerText: "great"
+            },
+            {
+                badge: "WB Section A #3",
+                title: "Leptis Magna (Libya 🇱🇾)",
+                question: "ماهي الصفة التي استخدمها جو لوصف مدينة (Leptis Magna) الأثرية؟",
+                options: ["beautiful", "ugly", "modern", "cold"],
+                correct: 0,
+                answerText: "beautiful"
+            },
+            {
+                badge: "WB Section A #4",
+                title: "Big Ben (London)",
+                question: "ماهي الصفة المستخدمة لوصف ساعة (Big Ben) في ألبوم الصور؟",
+                options: ["interesting", "hot", "fast", "cheap"],
+                correct: 0,
+                answerText: "interesting"
+            },
+            {
+                badge: "WB Section A #5",
+                title: "The Pyramids (Egypt 🇪🇬)",
+                question: "كيف وصف جو الأهرامات في مصر (The Pyramids)؟",
+                options: ["fantastic", "tiny", "soft", "new"],
+                correct: 0,
+                answerText: "fantastic"
+            },
+            {
+                badge: "WB Section A #6",
+                title: "Victoria Falls (Zimbabwe)",
+                question: "ماهي الصفة المناسبة لشلالات فيكتوريا (Victoria Falls)؟",
+                options: ["exciting", "quiet", "dry", "slow"],
+                correct: 0,
+                answerText: "exciting"
+            },
+            {
+                badge: "WB Section B Fact",
+                title: "Big Ben Fact",
+                question: "كم يبلغ وزن جرس ساعة بيغ بن (Big Ben) كما ورد في كتاب المعلم؟",
+                options: ["13 tons", "1 ton", "50 tons", "100 tons"],
+                correct: 0,
+                answerText: "13 tons (weighs 13 tons)"
+            },
+            {
+                badge: "WB Section C Vocab",
+                title: "Vocabulary: mosaics",
+                question: "ما هو المعنى الصحيح لكلمة (mosaics) في كتاب النشاط؟",
+                options: [
+                    "tiny pieces of glass or pottery",
+                    "public square",
+                    "the earth",
+                    "objects made of wood"
+                ],
+                correct: 0,
+                answerText: "mosaics = tiny pieces of glass or pottery"
+            }
+        ];
+
+        let currentQIndex = 0;
+        let score = 0;
+        let streak = 0;
+
+        function loadQuestion() {
+            const q = quizQuestions[currentQIndex];
+            document.getElementById('qBadge').innerText = q.badge;
+            document.getElementById('qTitle').innerText = q.title;
+            document.getElementById('qText').innerText = q.question;
+            document.getElementById('quizProgText').innerText = `السؤال ${currentQIndex + 1} من ${quizQuestions.length}`;
+            
+            // Progress Bar Width
+            const pct = ((currentQIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('quizProgFill').style.width = `${pct}%`;
+
+            // Reset Answer Toggle Box
+            const ansBox = document.getElementById('quizAnswerBox');
+            ansBox.classList.remove('open');
+            document.getElementById('toggleBtnLabel').innerText = "إظهار الإجابة النموذجية";
+            document.getElementById('quizAnswerVal').innerText = q.answerText;
+
+            // Render Choices
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            const optsWithIndex = q.options.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
+            optsWithIndex.sort(() => Math.random() - 0.5);
+
+            optsWithIndex.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${item.text}</span> <span class="opt-icon">⭕</span>`;
+                btn.onclick = function() {
+                    handleOptionSelection(btn, item.isCorrect);
+                };
+                container.appendChild(btn);
+            });
+
+            // Update Navigation Buttons State
+            document.getElementById('prevBtn').disabled = currentQIndex === 0;
+            document.getElementById('nextBtn').disabled = currentQIndex === quizQuestions.length - 1;
+        }
+
+        function handleOptionSelection(selectedBtn, isCorrect) {
+            getAudioContext();
+            const container = document.getElementById('optionsContainer');
+            const allBtns = container.querySelectorAll('.option-btn');
+
+            allBtns.forEach(b => b.onclick = null);
+
+            if (isCorrect) {
+                selectedBtn.classList.add('correct');
+                selectedBtn.querySelector('.opt-icon').innerText = '✅';
+                playWinSound();
+                score += 10;
+                streak += 1;
+                document.getElementById('scoreDisplay').innerText = score;
+                document.getElementById('quizStreakText').innerText = `سلسلة الإجابات: ${streak} 🔥`;
+            } else {
+                selectedBtn.classList.add('wrong');
+                selectedBtn.querySelector('.opt-icon').innerText = '❌';
+                playLoseSound();
+                streak = 0;
+                document.getElementById('quizStreakText').innerText = `سلسلة الإجابات: ${streak} 🔥`;
+
+                // Highlight correct answer
+                const q = quizQuestions[currentQIndex];
+                allBtns.forEach(b => {
+                    if (b.innerText.trim().includes(q.options[q.correct])) {
+                        b.classList.add('correct');
+                    }
+                });
+            }
+        }
+
+        // Toggle Quiz Answer (Click to Show, Click to Hide)
+        function toggleQuizAnswer() {
+            getAudioContext();
+            const box = document.getElementById('quizAnswerBox');
+            const label = document.getElementById('toggleBtnLabel');
+
+            if (box.classList.contains('open')) {
+                box.classList.remove('open');
+                label.innerText = "إظهار الإجابة النموذجية";
+            } else {
+                box.classList.add('open');
+                label.innerText = "إخفاء الإجابة النموذجية";
+            }
+        }
+
+        // Toggle Card Details Show/Hide
+        function toggleCardAns(targetId, btn) {
+            getAudioContext();
+            const box = document.getElementById(targetId);
+            const span = btn.querySelector('span');
+
+            if (box.classList.contains('open')) {
+                box.classList.remove('open');
+                span.innerText = "إظهار التفاصيل";
+            } else {
+                box.classList.add('open');
+                span.innerText = "إخفاء التفاصيل";
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQIndex < quizQuestions.length - 1) {
+                currentQIndex++;
+                loadQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQIndex > 0) {
+                currentQIndex--;
+                loadQuestion();
+            }
+        }
+
+        function switchTab(tabId) {
+            getAudioContext();
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+            document.getElementById(`btn-${tabId}`).classList.add('active');
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            loadQuestion();
+        };
+    </script>
+</body>
+</html>
+```
